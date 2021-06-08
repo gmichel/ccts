@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+    <entry key="national-select-term-matrix">
+        select term_matrix from svm.NationalTermMatrix where term_matrix_type = (?)
+    </entry>
+    <entry key="training-vector">
+        select termvector from svm.NationalTrainingVector where termvectortype = (?)
+    </entry>
+    <entry key="ref-class-name-index">
+        select ClassNameIndex from svm.RefDocumentClass where ClassName = (?) and ClassType= (?)
+    </entry>
+      <entry key="select-documents-from-organ-station-runtype">
+          select document_id from svm.v_DailyReports
+          where organ = (?) and instance_key = (?) and runtype= (?)
+    </entry>
+    <entry key="update-insert-documenttermvector">
+        {call svm.SP_UpdateInsertDocumentTermVector(?,?)}
+    </entry>
+    <entry key="update-insert-documentconceptlist">
+        {call svm.SP_UpdateInsertDocumentConceptList(?,?)}
+    </entry>
+    <entry key="national-update-insert-training-vector">
+        {call svm.SP_NationalUpdateInsertTrainingVector(?,?)}
+    </entry>
+    <entry key="national-update-insert-term-matrix">
+        {call svm.SP_NationalUpdateInsertTermMatrix(?,?)}
+    </entry>
+    <entry key="single-concept-doc">
+        {call svm.SP_single_concept_doc(?)}
+    </entry>
+    <entry key="national-training-data-concepts">
+        {call svm.SP_national_training_data_concepts(?,?,?,?)}
+    </entry>
+    <entry key="national-update-insert-model">
+        {call svm.SP_NationalStoredModel(?,?,?,?)}
+
+    </entry>
+    <entry key="drop_table">
+        drop table svm.nlp_results_ccts
+    </entry>
+    <entry key="move_view">
+        select * into svm.nlp_results_ccts from etex.v_nlp_results_ccts
+    </entry>
+    <entry key="select_station_organ">
+        select station, organ from etex.station_organ_ref
+    </entry>
+    <entry key="select_modelvalue">
+        SELECT ModelValue FROM svm.NationalModel WHERE  ModelOrgan=(?)
+    </entry>
+    <entry key="update-insert-documenttermvector">
+        UPDATE svm.DocumentTermVector SET term_vector = ? where document_id = ? IF @@ROWCOUNT = 0 BEGIN INSERT INTO svm.DocumentTermVector VALUES(?,?) END
+    </entry>
+    <entry key="update-insert-prediction">
+        UPDATE svm.Prediction SET Prediction = ? where DocumentId = ? and Organ = ? IF @@ROWCOUNT = 0 BEGIN INSERT INTO svm.Prediction (DocumentId,Prediction,Organ) VALUES (?,?,?) END
+    </entry>
+    <entry key="update-insert-predictionprobability">
+        UPDATE svm.PredictionProbability SET ProbabilityEstimate = ? where ProbabilityLabel = ? and DocumentId = ? and Organ = ? IF @@ROWCOUNT = 0 BEGIN INSERT INTO svm.PredictionProbability (ProbabilityLabel,ProbabilityEstimate,DocumentId,Organ) VALUES (?,?,?,?) END
+    </entry>
+    <entry key="getCAS">
+        select cas from document where document_id = (?)
+    </entry>
+   
+
+
+</properties>
